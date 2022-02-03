@@ -1,0 +1,60 @@
+
+.typeselector-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.typeselector-groups {
+    display: flex;
+    flex-direction: column;
+    
+    width: 350px;
+    height: 500px;
+
+    overflow-x: auto;
+    overflow-y: scroll;
+}
+
+.typeselector-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.typeselector-search {
+    margin-bottom: 0.5em;
+}
+
+.mg-row, .ig-row {
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+}
+
+.mg-clicker {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.mg-row-expander {
+    width: 25px;
+    text-align: center;
+    justify-types: center;
+    font-size: small;
+
+    cursor: pointer;
+    user-select: none;
+}
+
+.mg-children {
+    padding-left: 1em;
+}
+
+.ig {
+    padding-left: 25px;
+}
+
+.mg-label, .ig-label {
+    user-select: none;
+    cursor: pointer;
+}

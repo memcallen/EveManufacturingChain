@@ -1,0 +1,30 @@
+
+.indy-content {
+    width: 100%;
+    padding-top: 2em;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.indy-inputs {
+    width: 25%;
+
+    display: flex;
+    flex-direction: column;
+
+    padding-right: 1em;
+}
+
+.indy-inputs > * {
+    margin-bottom: 1em;
+}
+
+.indy-details {
+    width: 75%;
+}
+
+.indy-inputs > .row > * {
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+}

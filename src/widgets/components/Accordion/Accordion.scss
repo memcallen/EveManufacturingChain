@@ -1,0 +1,43 @@
+
+.accordion-outer, .accordion-fold {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.accordion-header {
+    width: 100%;
+    height: fit-content;
+    box-sizing: border-box;
+
+    cursor: pointer;
+    user-select: none;
+
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    padding-left: 0.5em;
+
+    background: none;
+
+    border-bottom: 1px solid black;
+}
+
+.accordion-header:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.accordion-arrow {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    justify-items: center;
+    margin-right: 3px;
+}
+
+.accordion-collapsed {
+    display: none;
+}
+
+.accordion-open {
+    display: block;
+}

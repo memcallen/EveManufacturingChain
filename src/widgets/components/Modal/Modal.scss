@@ -1,0 +1,67 @@
+
+.modal-background {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+    
+    background: #000000ab;
+    overflow: hidden;
+
+    z-index: 9999;
+}
+
+.modal {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15vh;
+
+    width: fit-content;
+    height: fit-content;
+
+    min-width: 10vw;
+    min-height: 25vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #5d5d5d;
+
+    border-radius: 0.25em;
+
+    padding: 0.25em;
+}
+
+.modal > * {
+    width: fit-parent;
+    height: fit-content;
+    margin-bottom: 0.5em;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.modal > *:last-child {
+    margin-bottom: 0;
+}
+
+.modal .btn {
+    width: fit-content;
+
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+
+    user-select: none;
+
+    background-color: #414141;
+
+    border-radius: 2px;
+    border: 2px solid #292929;
+}

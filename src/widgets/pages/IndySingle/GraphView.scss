@@ -1,0 +1,115 @@
+
+@use "sass:math";
+
+.graph-view-outer {
+    display: flex;
+    flex-direction: column;
+
+    margin: 2em;
+    padding: 0;
+}
+
+.graph-node-outer {
+    display: flex;
+    flex-direction: row;
+
+    position: relative;
+
+    width: fit-content;
+    height: fit-content;
+}
+
+.graph-node {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    border: 1px solid #0000007a;
+    background-color: #0000004b;
+
+    width: 180px;
+    height: fit-content;
+
+    padding: 0.5em;
+}
+
+.graph-node-collapser {
+    position: absolute;
+    right: 0.5em;
+    top: 0.5em;
+    user-select: none;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+.graph-node-popup-row {
+    display: flex;
+    flex-direction: row;
+    
+    width: 100%;
+}
+
+.graph-node-popup-btn {
+    margin-bottom: 0.5em;
+    margin-right: 0.5em;
+    user-select: none;
+}
+
+.graph-node-visible {
+    position: absolute;
+    left: 0.5em;
+    top: 0.5em;
+    user-select: none;
+}
+
+.graph-node > * {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.5em;
+    word-wrap: normal;
+    text-align: center;
+}
+
+$children-width: 3em;
+
+.graph-node-children {
+    display: flex;
+    flex-direction: column;
+    margin-left: $children-width;
+}
+
+.graph-node-children > .graph-node-outer {
+    margin-bottom: 1em;
+}
+
+.graph-node-line-parent {
+    position: absolute;
+    width: calc(#{math.div($children-width, 2)} + 1px);
+    height: 2px;
+
+    border-top: 2px solid #000000df;
+
+    left: 100%;
+    top: calc(2.5em - 1px);
+
+    margin: 0;
+}
+
+.graph-node-line-child-last {
+    position: absolute;
+    width: math.div($children-width, 2);
+    min-height: calc(100% + 1em);
+
+    border-top: 2px solid #000000df;
+
+    right: 100%;
+    top: 2.5em;
+
+    margin: 0;
+}
+
+.graph-node-line-child {
+    @extend .graph-node-line-child-last;
+
+    border-left: 2px solid #000000df;
+}

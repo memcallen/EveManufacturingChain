@@ -1,0 +1,36 @@
+
+.tab-view {
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-headers {
+    display: flex;
+    flex-direction: row;
+
+    background-color: #00000017;
+}
+
+.tab-header {
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    user-select: none;
+}
+
+.tab-header-active {
+    background-color: #00000028;
+}
+
+a.btn-disabled:hover {
+    cursor: not-allowed;
+    background-color: transparent;
+    filter: brightness(50%);
+}
+
+a.btn-disabled {
+    cursor: not-allowed;
+    background-color: transparent;
+    filter: brightness(50%);
+}

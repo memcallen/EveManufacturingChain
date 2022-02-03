@@ -1,0 +1,29 @@
+
+.table {
+    display: grid;
+    grid-template-columns: repeat(var(--columns), auto);
+    margin-left: 2em;
+    margin-right: auto;
+    width: fit-content;
+    --columns: 1;
+}
+
+.table-title {
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 0.25em;
+    border-bottom: 2px solid #000000d7;
+    grid-column-start: 1;
+    grid-column-end: var(--columns);
+    --columns: 1;
+}
+
+.table-header {
+    border-bottom: solid 1px #000000d7;
+    padding: 0.5em;
+}
+
+.table-cell {
+    border-bottom: solid 1px #00000044;
+    padding: 0.25em;
+}

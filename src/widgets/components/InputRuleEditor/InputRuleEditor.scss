@@ -1,0 +1,36 @@
+
+.input-rule-editor {
+    position: relative;
+    width: 100%;
+    height: fit-content;
+}
+
+.input-rule-section > * {
+    border-bottom: 1px solid black;
+    margin-bottom: 5px;
+}
+
+.input-rule-section > :last-child {
+    border-bottom: 0;
+}
+
+.ir-row {
+    margin-left: 1em;
+    margin-right: 1em;
+    padding: 2px;
+}
+
+.ir-row-btn {
+    height: 1,5em;
+    width: 1.5em;
+
+    margin-left: 1em;
+    padding-bottom: 4px;
+
+    text-align: center;
+    justify-items: center;
+}
+
+.input-rule-add {
+    display: flex;
+}

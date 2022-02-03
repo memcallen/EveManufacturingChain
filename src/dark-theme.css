@@ -1,0 +1,45 @@
+
+html, body {
+    background-color: #555555;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.header {
+    background-color: rgb(65, 65, 65);
+}
+
+.header-inner, .menuitem {
+    background-color: rgb(53, 53, 53);
+}
+
+.main {
+    background-color: #666666;
+}
+
+.btn:hover {
+    background-color: rgb(60, 60, 60);
+}
+
+* {
+    color: #EEEEEE;
+}
+
+input {
+    background-color: #555555;
+}
+
+::placeholder {
+    color: #BBBBBB;
+}
+
+.error {
+    color: darkred;
+}
+
+.paginator > *, .paginator > *:visited {
+    color: #BBBBBB;
+}
+
+hr, .post, .user {
+    border-color: #BBBBBB;
+}

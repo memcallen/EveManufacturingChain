@@ -1,0 +1,27 @@
+
+.output-view > * {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.output-view-img {
+    width: 64px;
+    height: 64px;
+
+    background-color: rgb(110, 110, 110);
+}
+
+.output-view-name {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 1em;
+}
+
+.output-view input {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.output-view-amount {
+    width: 25%;
+}
