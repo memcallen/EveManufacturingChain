@@ -16,10 +16,6 @@ html, body {
     background-color: #666666;
 }
 
-.btn:hover {
-    background-color: rgb(60, 60, 60);
-}
-
 * {
     color: #EEEEEE;
 }
@@ -32,18 +28,14 @@ input, select, option, button {
     background-color: #555555;
 }
 
+.btn:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
 ::placeholder {
     color: #BBBBBB;
 }
 
-.error {
-    color: darkred;
-}
-
-.paginator > *, .paginator > *:visited {
-    color: #BBBBBB;
-}
-
-hr, .post, .user {
+hr {
     border-color: #BBBBBB;
 }

@@ -16,7 +16,7 @@ class AccordionFold {
     view({ children }: { children? }) {
         return m(".accordion-fold", [
             m(".accordion-header.row", {onclick:()=> this.collapsed = !this.collapsed}, [
-                m(".accordion-arrow", this.collapsed ? "▶" : "▼"),
+                m("a.accordion-arrow", this.collapsed ? "▶" : "▼"),
                 this.label
             ]),
 
