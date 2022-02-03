@@ -24,8 +24,8 @@
     flex-direction: column;
     position: relative;
 
-    border: 1px solid #0000007a;
-    background-color: #0000004b;
+    border: 1px solid rgba(140, 130, 115, 0.48);
+    background-color: rgba(0, 0, 0, 0.29);
 
     width: 180px;
     height: fit-content;
@@ -87,7 +87,7 @@ $children-width: 3em;
     width: calc(#{math.div($children-width, 2)} + 1px);
     height: 2px;
 
-    border-top: 2px solid #000000df;
+    border-top: 2px solid rgba(140, 130, 115, 0.88);
 
     left: 100%;
     top: calc(2.5em - 1px);
@@ -100,7 +100,7 @@ $children-width: 3em;
     width: math.div($children-width, 2);
     min-height: calc(100% + 1em);
 
-    border-top: 2px solid #000000df;
+    border-top: 2px solid rgba(140, 130, 115, 0.88);
 
     right: 100%;
     top: 2.5em;
@@ -111,5 +111,5 @@ $children-width: 3em;
 .graph-node-line-child {
     @extend .graph-node-line-child-last;
 
-    border-left: 2px solid #000000df;
+    border-left: 2px solid rgba(140, 130, 115, 0.88);
 }

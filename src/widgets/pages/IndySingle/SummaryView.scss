@@ -12,18 +12,18 @@
     text-align: center;
     margin-top: 1em;
     margin-bottom: 0.25em;
-    border-bottom: 2px solid #000000d7;
+    border-bottom: 2px solid rgba(140, 130, 115, 0.84);
     grid-column-start: 1;
     grid-column-end: var(--columns);
     --columns: 1;
 }
 
 .table-header {
-    border-bottom: solid 1px #000000d7;
+    border-bottom: solid 1px rgba(140, 130, 115, 0.84);
     padding: 0.5em;
 }
 
 .table-cell {
-    border-bottom: solid 1px #00000044;
+    border-bottom: solid 1px rgba(140, 130, 115, 0.27);
     padding: 0.25em;
 }

@@ -1,6 +1,6 @@
 
 html, body {
-    background-color: #555555;
+    background-color: rgb(64, 69, 72);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -24,7 +24,11 @@ html, body {
     color: #EEEEEE;
 }
 
-input {
+a {
+    color: #3391ff;
+}
+
+input, select, option, button {
     background-color: #555555;
 }
 
