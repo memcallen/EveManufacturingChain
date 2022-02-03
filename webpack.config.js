@@ -11,7 +11,7 @@ module.exports = {
   
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'docs'),
   },
 
   resolve: {
@@ -27,7 +27,7 @@ module.exports = {
   ],
 
   devServer: {
-    // contentBase: path.join(__dirname, 'dist'),
+    // contentBase: path.join(__dirname, 'docs'),
     compress: true,
     host: "0.0.0.0",
     port: 8080,
