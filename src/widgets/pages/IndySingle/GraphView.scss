@@ -19,6 +19,14 @@
     height: fit-content;
 }
 
+.graph-controls-row {
+    margin-bottom: 1em;
+}
+
+.graph-controls-row > * {
+    margin-right: 1em;
+}
+
 .graph-node {
     display: flex;
     flex-direction: column;

@@ -294,7 +294,13 @@ interface IndySingleShareArgs {
 
 export const IndySingleShare = {
     reload: (state, config) => {
-        state.config = config && { ...loadConfig(JSON.parse(config)), id: null } || newConfig();
+        state.config = config ? 
+            {
+                ...loadConfig(JSON.parse(config)),
+                id: null,
+                updated: new Date()
+            } :
+            newConfig();
         state.str = config || JSON.stringify(saveConfig(state.config));
     },
 

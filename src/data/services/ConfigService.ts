@@ -6,6 +6,10 @@ export const ConfigService = {
 
     storage: new StorageHelper<{[id:number]:IndyConfigData}>("configs", {}),
 
+    getAllConfigs: () => {
+        return ConfigService.storage.get();
+    },
+
     findConfig: (config_id:number) => {
         const data = ConfigService.storage.get()[config_id];
 
@@ -18,7 +22,10 @@ export const ConfigService = {
                 config_id = !!configs ? (max(Object.keys(configs).map(x => +x)) || 0) + 1 : 1;
             }
 
-            configs[config_id] = saveConfig(config);
+            configs[config_id] = saveConfig({
+                ...config,
+                updated: new Date(),
+            });
             return configs;
         });
 

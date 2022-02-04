@@ -1,0 +1,55 @@
+
+.header {
+    height: 2.5em;
+    background-color: #414141;
+    margin-left: auto;
+    margin-right: auto;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.header > * {
+    width: fit-content;
+    align-self: stretch;
+}
+
+.menu-item {
+    padding: 0.5em;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.menu-item-label {
+    margin-right: 0.25em;
+    white-space: nowrap;
+}
+
+.menu-item-popup {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 100%;
+}
+
+.menu-item-popup-side {
+    position: absolute;
+    top: 0;
+    left: 100%;
+}
+
+.menu-item-dropdown {
+    background-color: #414141;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-item-dropdown > * {
+    height: fit-content;
+    align-self: stretch;
+}
+
+.menu-item:not(:hover) > .menu-item-popup-side, .menu-item:not(:hover) > .menu-item-popup {
+    display: none;
+}

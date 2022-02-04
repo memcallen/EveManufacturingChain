@@ -27,17 +27,17 @@ interface NodeViewArgs {
         price_rules: {[typeid:number]:"b"|"s"};
         onPriceRulesChanged: (price_rules)=>void;
         isLast?: boolean;
+        expandAll?: boolean;
+        hideAll?: boolean;
     };
     state: {
         collapsed?: boolean;
         hidden?: boolean;
     };
-    children?;
-    dom?: Element;
 };
 
 const NodeView = {
-    view: ({ attrs: { showPopupMenu, node, depth, price_rules, onPriceRulesChanged, isLast }, state, children }: NodeViewArgs) => {
+    view: ({ attrs: { showPopupMenu, node, depth, price_rules, onPriceRulesChanged, isLast, expandAll, hideAll }, state }: NodeViewArgs) => {
         
         depth = depth || 1;
 
@@ -53,13 +53,13 @@ const NodeView = {
 
             m(".graph-node", [
 
-                node.children.length > 0 && !state.collapsed && m(".graph-node-line-parent"),
+                node.children.length > 0 && (!state.collapsed || expandAll) && m(".graph-node-line-parent"),
 
-                node.children.length > 0 && m("a.btn.graph-node-collapser",
+                node.children.length > 0 && !expandAll && m("a.btn.graph-node-collapser",
                     {onclick: () => state.collapsed = !state.collapsed},
                     state.collapsed ? "-" : "+"),
 
-                m("a.btn.graph-node-visible",
+                !hideAll && m("a.btn.graph-node-visible",
                     {onclick: () => state.hidden = !state.hidden},
                     state.hidden ? m("i.fa.fa-eye-slash") : m("i.fa.fa-eye")),
 
@@ -71,7 +71,7 @@ const NodeView = {
 
                 m("a.graph-node-name", {href: `https://evemarketer.com/types/${node.typeid}`}, TYPES[node.typeid].name),
 
-                !state.hidden && [
+                (!state.hidden && !hideAll) && [
                     node.src == "build" && [
                         `${NumberFormat(node.quantity)} (${NumberFormat(node.runs)} run${node.runs == 1 ? "" : "s"})`,
                         FormatTime(node.duration),
@@ -121,7 +121,7 @@ const NodeView = {
                 ]
             ]),
 
-            !state.collapsed && m(".graph-node-children", [
+            node.children.length > 0 && (!state.collapsed || expandAll) && m(".graph-node-children", [
                 [...node.children]
                     .sort((a, b) => getPrice(price_rules, b) - getPrice(price_rules, a))
                     .map((child, idx, arr) => m(NodeView, {
@@ -130,11 +130,11 @@ const NodeView = {
                         showPopupMenu,
                         price_rules,
                         onPriceRulesChanged,
-                        isLast: idx == arr.length - 1
+                        isLast: idx == arr.length - 1,
+                        expandAll,
+                        hideAll
                     }))
             ]),
-
-            ...children,
 
             node.parents.length > 0 && m(isLast ?
                     ".graph-node-line-child-last" :
@@ -154,6 +154,8 @@ export interface GraphViewArgs {
     state: {
         PopupMenu;
         showPopupMenu;
+        expandAll?: boolean;
+        hideAll?: boolean;
     }
 };
 
@@ -164,13 +166,40 @@ export const GraphView = {
         state.PopupMenu = PopupMenu;
     },
 
-    view: ({ state, attrs: { config, roots = [], onRulesChanged, onOutputChanged, onPriceRulesChanged } }: GraphViewArgs) => {
+    view: ({ attrs: { config, roots = [], onRulesChanged, onOutputChanged, onPriceRulesChanged }, state }: GraphViewArgs) => {
         return m(".graph-view-outer", [
+            m(".col", [
+                m(".row.graph-controls-row", [
+                    m("div", [
+                        m("input", {
+                            id: "expand-all-cb",
+                            type: "checkbox",
+                            onchange: evt => state.expandAll = evt.target.checked
+                        }),
+                        m("label", {
+                            for: "expand-all-cb",
+                        }, "Expand All"),
+                    ]),
+                    m("div", [
+                        m("input", {
+                            id: "hide-all-details-cb",
+                            type: "checkbox",
+                            onchange: evt => state.hideAll = evt.target.checked
+                        }),
+                        m("label", {
+                            for: "hide-all-details-cb",
+                        }, "Hide All Details"),
+                    ])
+                ])
+            ]),
+
             roots.map(node => m(NodeView, {
                 node,
                 showPopupMenu: state.showPopupMenu,
                 price_rules: config.price_rules,
-                onPriceRulesChanged
+                onPriceRulesChanged,
+                expandAll: state.expandAll || false,
+                hideAll: state.hideAll || false,
             })),
 
             RenderPopupMenu(state.PopupMenu, config, onRulesChanged, onOutputChanged)

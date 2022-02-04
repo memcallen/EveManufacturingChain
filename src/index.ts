@@ -1,5 +1,6 @@
 
 import * as m from "mithril";
+import { getQueryString } from "./util/hash";
 
 import { Layout } from "./widgets/Layout";
 
@@ -8,14 +9,24 @@ import { IndySingleId, IndySingleShare, IndySingleUnsaved } from "./widgets/page
 import './index.css';
 import './dark-theme.css';
 import './index.html';
-import { getQueryString } from "./util/hash";
+import { IndySingleBrowser } from "./widgets/pages/IndySingleBrowser/IndySingleBrowser";
+
+const Redirector = (page: m.ComponentTypes, params?: {[key:string]:string}, qparams?: {[key:string]:string}) =>  {
+    return {
+        view: () => {
+            redirectTo(page, params, qparams);
+            return null;
+        }
+    };
+}
 
 const routes: [string, m.ComponentTypes][] = [
-    ["/", IndySingleUnsaved],
+    ["/", Redirector(IndySingleUnsaved)],
     ["/planner/new", IndySingleUnsaved],
     ["/planner/saved/:id", IndySingleId],
     ["/planner/share", IndySingleShare],
-]
+    ["/planner/browse", IndySingleBrowser],
+];
 
 const routes_dict = {};
 

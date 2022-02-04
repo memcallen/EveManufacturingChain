@@ -25,6 +25,7 @@ export interface InputRuleData {
 export interface IndyConfigData {
     id: number;
     n: string;
+    u: number;
     i: InputRuleData[];
     p: InputRuleData[];
     b: InputRuleData[];
@@ -70,6 +71,7 @@ function saveInputRule(rule: InputRule): InputRuleData {
 export interface IndyConfig {
     id: number;
     name: string;
+    updated: Date;
 
     input_rules: InputRule[];
     purchase_rules: InputRule[];
@@ -83,6 +85,7 @@ export interface IndyConfig {
 export const newConfig = () => ({
     id: null,
     name: null,
+    updated: new Date(),
     input_rules: [],
     purchase_rules: [],
     build_rules: [],
@@ -93,6 +96,7 @@ export const newConfig = () => ({
 export const loadConfig = (data: IndyConfigData):IndyConfig => ({
     id: data.id,
     name: data.n,
+    updated: new Date(data.u),
     input_rules: map(data.i, loadInputRule),
     purchase_rules: map(data.p, loadInputRule),
     build_rules: map(data.b, loadInputRule),
@@ -101,11 +105,12 @@ export const loadConfig = (data: IndyConfigData):IndyConfig => ({
         type: TYPES[data.o.id],
         quantity: data.o.q
     }
-})
+});
 
 export const saveConfig = (config: IndyConfig): IndyConfigData => ({
     id: config.id,
     n: config.name,
+    u: config.updated.getTime(),
     i: map(config.input_rules, saveInputRule),
     p: map(config.purchase_rules, saveInputRule),
     b: map(config.build_rules, saveInputRule),
@@ -115,7 +120,7 @@ export const saveConfig = (config: IndyConfig): IndyConfigData => ({
         id: config.output?.type?.id,
         q: config.output?.quantity
     }
-})
+});
 
 export interface IndyNodeFractional {
     typeid: number;

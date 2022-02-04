@@ -1,14 +1,12 @@
 
-.summary-table {
+.table {
     display: grid;
     grid-template-columns: repeat(var(--columns), auto);
-    margin-left: 2em;
-    margin-right: auto;
-    width: fit-content;
+    width: 100%;
     --columns: 1;
 }
 
-.summary-table-title {
+.table-title {
     text-align: center;
     margin-top: 1em;
     margin-bottom: 0.25em;
@@ -18,12 +16,16 @@
     --columns: 1;
 }
 
-.summary-table-header {
+.table-header {
     border-bottom: solid 1px rgba(140, 130, 115, 0.84);
     padding: 0.5em;
 }
 
-.summary-table-cell {
+.table-cell {
     border-bottom: solid 1px rgba(140, 130, 115, 0.27);
     padding: 0.25em;
+}
+
+.table-cell > * {
+    margin: auto;
 }
