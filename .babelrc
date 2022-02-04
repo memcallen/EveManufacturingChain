@@ -1,0 +1,18 @@
+{
+    "presets": [
+        ["@babel/preset-env", {
+            "useBuiltIns": "usage",
+            "corejs": 3, // or 2,
+            "targets": {
+                "firefox": "64"
+            }
+        }],
+        "@babel/typescript"
+    ],
+    "plugins": [
+        ["@babel/plugin-transform-react-jsx", {
+            "pragma": "m",
+            "pragmaFrag": "'['"
+        }]
+    ]
+}
