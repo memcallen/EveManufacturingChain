@@ -5,11 +5,12 @@ import { getQueryString } from "./util/hash";
 import { Layout } from "./widgets/Layout";
 
 import { IndySingleId, IndySingleShare, IndySingleUnsaved } from "./widgets/pages/IndySingle/IndySingle";
+import { IndySingleBrowser } from "./widgets/pages/IndySingleBrowser/IndySingleBrowser";
+import { About } from "./widgets/pages/About/About";
 
 import './index.css';
 import './dark-theme.css';
 import './index.html';
-import { IndySingleBrowser } from "./widgets/pages/IndySingleBrowser/IndySingleBrowser";
 
 const Redirector = (page: m.ComponentTypes, params?: {[key:string]:string}, qparams?: {[key:string]:string}) =>  {
     return {
@@ -26,6 +27,8 @@ const routes: [string, m.ComponentTypes][] = [
     ["/planner/saved/:id", IndySingleId],
     ["/planner/share", IndySingleShare],
     ["/planner/browse", IndySingleBrowser],
+
+    ["/about", About],
 ];
 
 const routes_dict = {};

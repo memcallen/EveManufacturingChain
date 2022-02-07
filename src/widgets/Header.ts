@@ -1,8 +1,9 @@
 
 import * as m from "mithril";
-import { getRedirectHash, redirectTo } from "../";
+import { redirectTo } from "../";
 
 import './Header.scss';
+import { About } from "./pages/About/About";
 import { IndySingleUnsaved } from "./pages/IndySingle/IndySingle";
 import { IndySingleBrowser } from "./pages/IndySingleBrowser/IndySingleBrowser";
 
@@ -65,10 +66,13 @@ export const Header = {
                     redirectTo(IndySingleBrowser);
                 }}),
                 m(SubmenuItem, {text: "New", onclick: () => {
-                    redirectTo(IndySingleUnsaved)
+                    redirectTo(IndySingleUnsaved);
                 }}),
-            ])
+            ]),
 
+            m(MenuItem, {text: "About", onclick: () => {
+                redirectTo(About);
+            }})
         ]);
     }
 };

@@ -13,14 +13,16 @@ export function pad(n, width, z='0') {
 }
 
 export function FormatTime(seconds:number) {
-    var x = "";
-    if(seconds >= 60*60*24) {
-        x += `${Math.floor(seconds/60/60/24)}:`;
+    const s = Math.floor(seconds % 60),
+          m = Math.floor(seconds / 60 % 60),
+          h = Math.floor(seconds / 60 / 60 % 24),
+          d = Math.floor(seconds / 60 / 60 / 24);
+
+    if(d == 0) {
+        return `${pad(Math.floor(h), 2)}:${pad(Math.floor(m), 2)}:${pad(Math.floor(s), 2)}`;
+    } else {
+        return `${d}D ${pad(Math.floor(h), 2)}:${pad(Math.floor(m), 2)}:${pad(Math.floor(s), 2)}`;
     }
-
-    x += `${pad(Math.floor(seconds/60/60)%24, 2)}:${pad(Math.floor(seconds/60)%60, 2)}`;
-
-    return x;
 }
 
 export const getPrice = (price_rules, node: IndyNode) => {
@@ -40,6 +42,12 @@ export const Price2 = (price_rules, node: IndyNode) => {
     return FormatPrice(getPrice(price_rules, node));
 }
 
-export const FormatPrice = (isk:number) => isk >= 1e9 ?
-    isk && isk.toExponential(3) :
-    isk && ISK_FMT.format(isk).replace("US$", "");
+export const FormatPrice = (isk:number) => {
+    if(isk >= 1e12) {
+        return `${(isk / 1e12).toFixed(3)}T`;
+    }
+    if(isk >= 1e9) {
+        return `${(isk / 1e9).toFixed(3)}B`;
+    }
+    return ISK_FMT.format(isk).replace("US$", "");
+}

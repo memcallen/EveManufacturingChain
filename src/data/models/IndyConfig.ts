@@ -1,5 +1,5 @@
 import { map } from "lodash";
-import { Blueprint } from "../blueprints";
+import { Blueprint, BLUEPRINTS } from "../blueprints";
 import { MarketGroup, MARKET_GROUPS } from "../market";
 import { TypePricing } from "../services/PriceService";
 import { Type, TYPES } from "../type";
@@ -32,6 +32,18 @@ export interface IndyConfigData {
     pr: {[typeid:number]:"b"|"s"};
 
     o: {id: number, q?: number};
+};
+
+export interface BlueprintResearch {
+    bp: Blueprint;
+    materialModifier:number;
+    timeModifier:number;
+};
+
+export interface BlueprintResearchData {
+    i:number;
+    m:number;
+    t:number;
 };
 
 function loadInputRule(data: InputRuleData): InputRule {
@@ -68,6 +80,22 @@ function saveInputRule(rule: InputRule): InputRuleData {
     }
 }
 
+function loadBlueprint(bp: BlueprintResearchData): BlueprintResearch {
+    return {
+        bp: BLUEPRINTS[bp.i][0],
+        materialModifier: bp.m,
+        timeModifier: bp.t,
+    };
+}
+
+function saveBlueprint(bp: BlueprintResearch): BlueprintResearchData {
+    return {
+        i: bp.bp.blueprint_id,
+        m: bp.materialModifier,
+        t: bp.timeModifier,
+    };
+}
+
 export interface IndyConfig {
     id: number;
     name: string;
@@ -78,7 +106,8 @@ export interface IndyConfig {
     build_rules: InputRule[];
 
     price_rules: {[typeid:number]:"b"|"s"};
-
+    blueprints:  {[id:number]:BlueprintResearch};
+    
     output: IndyOutput;
 };
 
@@ -100,6 +129,7 @@ export const loadConfig = (data: IndyConfigData):IndyConfig => ({
     input_rules: map(data.i, loadInputRule),
     purchase_rules: map(data.p, loadInputRule),
     build_rules: map(data.b, loadInputRule),
+    blueprints: null,
     price_rules: {...data.pr},
     output: {
         type: TYPES[data.o.id],

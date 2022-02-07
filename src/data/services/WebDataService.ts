@@ -1,6 +1,6 @@
 import { Activity, BLUEPRINTS } from "../blueprints";
 import { MarketGroup, MARKET_GROUPS } from "../market";
-import { IndyConfig, IndyNode, IndyResult, InputRule, WaterfallEntry } from "../models/IndyConfig";
+import { BlueprintResearch, IndyConfig, IndyNode, IndyResult, InputRule, WaterfallEntry } from "../models/IndyConfig";
 import { Type, TYPES } from "../type";
 import { Pricing } from "./PriceService";
 
@@ -31,14 +31,6 @@ function loadTypes(rules: InputRule[]): Set<number> {
     return new Set(types.map(type => type.id));
 }
 
-interface BpInfo {
-    [id:number]:{
-        materialModifier:number;
-        timeModifier:number;
-        timeSkillModifier:number;
-    };
-};
-
 function getTypeSrc(typeid:number, to_input: Set<number>, to_purchase: Set<number>, to_build: Set<number>) {
     if(to_input.has(typeid)) {
         return "input";
@@ -56,7 +48,7 @@ function isResolvable(node: IndyNode) {
     return node.parents.map(n=>n.resolved).reduce((acc, x) => acc && x, true) && !node.resolved;
 }
 
-function getInputAmt(node: IndyNode, input_id: number, bpinfo: BpInfo) {
+function getInputAmt(node: IndyNode, input_id: number, bpinfo: {[bpid:number]:BlueprintResearch}) {
     const amt = node.runs * node.bp.inputs[input_id] * (bpinfo[node.bp.blueprint_id]?.materialModifier || 1);
     return Math.max(node.runs, Math.ceil(Math.round(amt*1e2)/1e2));
 }
@@ -75,7 +67,7 @@ interface WaterfallInfo {
     slot: number;
 };
 
-function getSummary(config: IndyConfig, to_input: Set<number>, to_purchase: Set<number>, to_build: Set<number>, bpinfo: BpInfo = {}): IndyNode[] {
+function getSummary(config: IndyConfig, to_input: Set<number>, to_purchase: Set<number>, to_build: Set<number>, bpinfo: {[bpid:number]:BlueprintResearch} = {}): IndyNode[] {
 
     const nodes: {[typeid:number]:IndyNode} = {};
 
@@ -135,9 +127,7 @@ function getSummary(config: IndyConfig, to_input: Set<number>, to_purchase: Set<
 
         if(resolvable.src == "build") {
             resolvable.runs = Math.ceil(resolvable.quantity / resolvable.bp.output.amt);
-            resolvable.duration = resolvable.bp.time * resolvable.runs *
-                (bpinfo[resolvable.bp.blueprint_id]?.timeModifier || 1) *
-                (bpinfo[resolvable.bp.blueprint_id]?.timeSkillModifier || 1);
+            resolvable.duration = resolvable.bp.time * resolvable.runs * (bpinfo[resolvable.bp.blueprint_id]?.timeModifier || 1);
 
             resolvable.inputs = Object.keys(resolvable.bp.inputs).map(id => ({
                 id:+id,
@@ -159,7 +149,7 @@ function getSummary(config: IndyConfig, to_input: Set<number>, to_purchase: Set<
     return encounter_order;
 }
 
-function getGraph(config: IndyConfig, to_input: Set<number>, to_purchase: Set<number>, to_build: Set<number>, bpinfo: BpInfo = {}): IndyNode {
+function getGraph(config: IndyConfig, to_input: Set<number>, to_purchase: Set<number>, to_build: Set<number>, bpinfo: {[bpid:number]:BlueprintResearch} = {}): IndyNode {
     
     const nodes: {[typeid:number]:IndyNode} = {};
 
@@ -192,9 +182,7 @@ function getGraph(config: IndyConfig, to_input: Set<number>, to_purchase: Set<nu
                 node.bp = BLUEPRINTS[typeid][0];
                 
                 node.runs = amt / node.bp.output.amt;
-                node.duration = node.bp.time * node.runs *
-                    (bpinfo[node.bp.blueprint_id]?.timeModifier || 1) *
-                    (bpinfo[node.bp.blueprint_id]?.timeSkillModifier || 1);
+                node.duration = node.bp.time * node.runs * (bpinfo[node.bp.blueprint_id]?.timeModifier || 1);
 
                 Object.keys(node.bp.inputs).forEach(id => {
                     node.children.push(fn(+id, getInputAmt(node, +id, bpinfo), node));
@@ -310,7 +298,7 @@ export function getIndustryResults(config: IndyConfig): IndyResult {
     const to_purchase = loadTypes(config.purchase_rules);
     const to_build = loadTypes(config.build_rules);
 
-    const bpinfo: BpInfo = {};
+    const bpinfo: {[bpid:number]:BlueprintResearch} = {};
 
     return {
         config: config,

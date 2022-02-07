@@ -1,8 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ENV = require('./env');
 
-module.exports = {
+module.exports = (env) => ({
   mode: 'development',
   entry: [
     './src/index.ts'
@@ -15,30 +16,23 @@ module.exports = {
   },
 
   resolve: {
-    extensions: [ '*', '.tsx', '.ts', '.js' ],
+    extensions: [ '.ts', '.js', '.scss' ],
   },
 
-  plugins: [  
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development',
-      DEBUG: false
-    }),
-    // new HtmlWebpackPlugin()
+  plugins: [
+    new webpack.EnvironmentPlugin(ENV),
   ],
 
   devServer: {
-    // contentBase: path.join(__dirname, 'docs'),
     compress: true,
     host: "0.0.0.0",
     port: 8080,
     allowedHosts: [
-      'web.final.com',
       'localhost',
-      '127.0.0.1'
     ],
     historyApiFallback: {
-      index: 'index.html'
-    }
+      index: 'index.html',
+    },
   },
 
   module: {
@@ -47,7 +41,6 @@ module.exports = {
         test: /\.(tsx?|jsx?)$/,
         use: [
           'babel-loader',
-          // 'ts-loader',
         ],
         exclude: /node_modules/,
       },
@@ -59,10 +52,16 @@ module.exports = {
       {
         test: /\.css$/i,
         use: [
-          // Creates `style` nodes from JS strings
           "style-loader",
-          // Translates CSS into CommonJS
           "css-loader",
+        ],
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          "style-loader",
+          "css-loader",
+          "sass-loader",
         ],
       },
       {
@@ -87,17 +86,6 @@ module.exports = {
           }
         },
       },
-      {
-        test: /\.s[ac]ss$/i,
-        use: [
-          // Creates `style` nodes from JS strings
-          "style-loader",
-          // Translates CSS into CommonJS
-          "css-loader",
-          // Compiles Sass to CSS
-          "sass-loader",
-        ],
-      },
     ],
   },
-};
+});

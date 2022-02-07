@@ -4,11 +4,12 @@ import { filter, map } from "lodash";
 import { IndyConfig, IndyNode } from "../../../data/models/IndyConfig";
 import { TYPES } from "../../../data/type";
 import { PopupMenuHooks } from "../../components/PopupMenu/PopupMenu";
-import { FormatTime } from "../../../util/format_utils";
+import { FormatPrice, FormatTime, getPrice } from "../../../util/format_utils";
 import { PopupMenuButton, RenderPopupMenu } from "./PopupMenuHelpers";
 
 import './SummaryView.scss';
 import { PriceView } from "../../components/PriceView/PriceView";
+import { CostIndices } from "../../../data/services/CostIndexService";
 
 const Table = {
     view: ({ attrs: { title, headers, rows } }) => {
@@ -23,7 +24,7 @@ const Table = {
 };
 
 interface Args {
-    attrs:{
+    attrs: {
         config:IndyConfig;
         summary:IndyNode[];
         onRulesChanged: (build_rules, purchase_rules, input_rules)=>void;
@@ -45,10 +46,19 @@ export const SummaryView = {
 
     view: ({ state, attrs: { config, summary, onRulesChanged, onOutputChanged, onPriceRulesChanged } }: Args) => {
         const builds = filter(summary, e => e.src == "build");
-        const purchases = filter(summary, e => e.src == "purchase");
+        const purchases = filter(summary, e => e.src == "purchase")
+            .sort((a, b) => getPrice(config.price_rules, b) - getPrice(config.price_rules, a));
         const inputs = filter(summary, e => e.src == "input");
 
+        const out_price = summary && getPrice(config.price_rules, summary.find(n => n.typeid == config.output.type.id));
+        const in_price = purchases.map(node => getPrice(config.price_rules, node)).reduce((acc, x) => acc + x, 0);
+
         return summary && m(".summary-outer", [
+            m(".summary-details", `Output: ${FormatPrice(out_price)} ISK`),
+            m(".summary-details", `Purchases: ${FormatPrice(in_price)} ISK`),
+            m(".summary-details", `Profit: ${FormatPrice(out_price - in_price)} ISK`),
+            m(".summary-details", `Profit (Unit): ${FormatPrice((out_price - in_price) / config.output.quantity)} ISK`),
+
             builds.length > 0 && m(Table, {
                 title: "Build",
                 headers: ["Type Name", "Run Count", "Quantity", "Installation Fee", "Duration", ""],
@@ -57,6 +67,7 @@ export const SummaryView = {
                     e.runs.toLocaleString(),
                     e.quantity.toLocaleString(),
                     0,
+                    // CostIndices.getInstallationCost(),
                     FormatTime(e.duration),
                     m(PopupMenuButton, {showPopupMenu: state.showPopupMenu, data: e})
                 ])
