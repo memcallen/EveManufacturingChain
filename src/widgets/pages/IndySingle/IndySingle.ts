@@ -69,7 +69,7 @@ const IndyInputs = {
                 type: "button",
                 value: "Save",
                 onclick: () => {
-                    const config_id = ConfigService.saveConfig(config.id, config);
+                    const config_id = ConfigService.saveConfig(config);
                     redirectTo(IndySingleId, {
                         id: config_id.toString()
                     });

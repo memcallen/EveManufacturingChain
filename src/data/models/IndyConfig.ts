@@ -119,6 +119,7 @@ export const newConfig = () => ({
     purchase_rules: [],
     build_rules: [],
     price_rules: {},
+    blueprints: {},
     output: null,
 });
 
