@@ -105,7 +105,7 @@ const NodeView = {
                         m(PriceView, {
                             typeid: node.typeid,
                             amt: node.quantity,
-                            default_price: "b",
+                            default_price: "s",
                             price_rules,
                             onPriceRulesChanged,
                         }),
@@ -113,7 +113,7 @@ const NodeView = {
                         m(PriceView, {
                             typeid: node.typeid,
                             amt: 1,
-                            default_price: "b",
+                            default_price: "s",
                             price_rules,
                             onPriceRulesChanged,
                         }),
