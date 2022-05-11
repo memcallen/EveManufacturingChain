@@ -27,11 +27,11 @@ const IndyCompare = {
                 result
             }),
 
-            m(IndyDetails, {
-                config,
-                setConfig,
-                result
-            }),
+            // m(IndyDetails, {
+            //     config,
+            //     setConfig,
+            //     result
+            // }),
         ]));
     }
 };

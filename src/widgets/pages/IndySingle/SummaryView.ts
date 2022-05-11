@@ -83,14 +83,14 @@ export const SummaryView = {
                         price_rules: config.price_rules,
                         typeid: e.typeid,
                         amt: e.quantity,
-                        default_price: "b",
+                        default_price: "s",
                         onPriceRulesChanged
                     }),
                     m(PriceView, {
                         price_rules: config.price_rules,
                         typeid: e.typeid,
                         amt: 1,
-                        default_price: "b",
+                        default_price: "s",
                         onPriceRulesChanged
                     }),
                     m(PopupMenuButton, {showPopupMenu: state.showPopupMenu, data: e})

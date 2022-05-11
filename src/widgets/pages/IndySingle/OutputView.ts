@@ -36,6 +36,7 @@ export const OutputView = {
                 m("input.output-view-amount", {
                     type: "number",
                     value: output?.quantity || 0,
+                    min: 0,
                     placeholder: "Quantity",
                     onchange: evt => {
                         onOutputChanged({
@@ -43,18 +44,18 @@ export const OutputView = {
                             quantity: +evt.target.value
                         });
                     },
-                    onmousewheel: evt => {
+                    onwheel: evt => {
                         evt.preventDefault();
                         
                         if(evt.wheelDelta < 0) {
                             onOutputChanged({
                                 ...output,
-                                quantity: output.quantity <= 1 ? 0 : output.quantity - 1
+                                quantity: Math.max(0, output ? output.quantity - 1 : 0)
                             });
                         } else if(evt.wheelDelta > 0) {
                             onOutputChanged({
                                 ...output,
-                                quantity: output.quantity + 1
+                                quantity: Math.max(0, output ? output.quantity + 1 : 0)
                             });
                         }
                     }
